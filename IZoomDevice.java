@@ -1,14 +1,14 @@
 public interface IZoomDevice {
     
-    public ZoomMeeting startMeeting(int meetingPassword, User... users);
+    public ZoomMeeting startMeeting(User host, int id, int password, User... users);
 
-    public ZoomMeeting startMeeting(int meetingPassword);
+    public ZoomMeeting startMeeting(User host, int id, int password);
 
     public boolean endMeeting(ZoomMeeting meeting);
 
-    public boolean joinMeeting(ZoomMeeting meeting, int meetingPassword);
+    public boolean joinMeeting(User host, ZoomMeeting meeting, int password);
         
-    public boolean leaveMeeting(ZoomMeeting meeting);
+    public boolean leaveMeeting(User user);
 
     public boolean sendGeneralChatMessage(String message, ZoomMeeting meeting);
 
@@ -25,5 +25,5 @@ public interface IZoomDevice {
     public boolean isMicrophoneOpen();
 
     public boolean isCameraOn();
-    
+
 }

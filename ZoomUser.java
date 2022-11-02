@@ -19,6 +19,10 @@ public class ZoomUser extends User {
 
     public boolean leaveCurrentMeeting() {
         Device device = getDevice();
-        return device.leaveMeeting(device.getCurrentMeeting());
+        return device.leaveMeeting(this.toUser());
+    }
+
+    public User toUser() {
+        return new User(getName(), getDevice());
     }
 }

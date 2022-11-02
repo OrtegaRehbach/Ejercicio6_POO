@@ -17,6 +17,10 @@ public abstract class Device implements IZoomDevice {
         return this.currentMeeting;
     }
 
+    public void setCurrentMeeting(ZoomMeeting currentMeeting) {
+        this.currentMeeting = currentMeeting;
+    }
+
     public boolean isInMeeting() {
         return currentMeeting != null;
     }
@@ -31,8 +35,32 @@ public abstract class Device implements IZoomDevice {
 
     // IZoomDevice Implementation
     @Override
-    public ZoomMeeting startMeeting(int meetingPassword, User... users) {
-        return new ZoomMeeting()
+    public ZoomMeeting startMeeting(User host, int id, int password, User... users) {
+        return new ZoomMeeting(host, id, password, users);
+    }
+
+    @Override
+    public ZoomMeeting startMeeting(User host, int id, int password) {
+        return new ZoomMeeting(host, id, password);
+    }
+
+    @Override
+    public boolean endMeeting(ZoomMeeting meeting) {
+        return meeting.endMeeting();
+    }
+
+    @Override
+    public boolean joinMeeting(User user, ZoomMeeting meeting, int password) {
+        if (meeting.checkValidPassword(password)) {
+            return meeting.addUser(user);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean leaveMeeting(User user) {
+        return this.currentMeeting.removeUser(user);
     }
 
 }
